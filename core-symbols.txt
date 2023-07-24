@@ -189,9 +189,11 @@ drmSyncobjCreate
 drmSyncobjDestroy
 drmSyncobjEventfd
 drmSyncobjExportSyncFile
+drmSyncobjExportSyncFileTimeline
 drmSyncobjFDToHandle
 drmSyncobjHandleToFD
 drmSyncobjImportSyncFile
+drmSyncobjImportSyncFileTimeline
 drmSyncobjQuery
 drmSyncobjQuery2
 drmSyncobjReset

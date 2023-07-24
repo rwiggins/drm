@@ -4933,6 +4933,19 @@ drm_public int drmSyncobjFDToHandle(int fd, int obj_fd, uint32_t *handle)
     return 0;
 }
 
+drm_public int drmSyncobjImportSyncFileTimeline(int fd, uint32_t handle,
+                                                uint64_t point,
+                                                int sync_file_fd)
+{
+    struct drm_syncobj_sync_file args;
+
+    memclear(args);
+    args.fd = sync_file_fd;
+    args.handle = handle;
+    args.point = point;
+    return drmIoctl(fd, DRM_IOCTL_SYNCOBJ_IMPORT_SYNC_FILE, &args);
+}
+
 drm_public int drmSyncobjImportSyncFile(int fd, uint32_t handle,
                                         int sync_file_fd)
 {
@@ -4943,6 +4956,24 @@ drm_public int drmSyncobjImportSyncFile(int fd, uint32_t handle,
     args.handle = handle;
     args.flags = DRM_SYNCOBJ_FD_TO_HANDLE_FLAGS_IMPORT_SYNC_FILE;
     return drmIoctl(fd, DRM_IOCTL_SYNCOBJ_FD_TO_HANDLE, &args);
+}
+
+drm_public int drmSyncobjExportSyncFileTimeline(int fd, uint32_t handle,
+                                                uint64_t point,
+                                                int *sync_file_fd)
+{
+    struct drm_syncobj_sync_file args;
+    int ret;
+
+    memclear(args);
+    args.fd = -1;
+    args.handle = handle;
+    args.point = point;
+    ret = drmIoctl(fd, DRM_IOCTL_SYNCOBJ_EXPORT_SYNC_FILE, &args);
+    if (ret)
+        return ret;
+    *sync_file_fd = args.fd;
+    return 0;
 }
 
 drm_public int drmSyncobjExportSyncFile(int fd, uint32_t handle,

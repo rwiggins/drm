@@ -927,7 +927,11 @@ extern int drmSyncobjHandleToFD(int fd, uint32_t handle, int *obj_fd);
 extern int drmSyncobjFDToHandle(int fd, int obj_fd, uint32_t *handle);
 
 extern int drmSyncobjImportSyncFile(int fd, uint32_t handle, int sync_file_fd);
+extern int drmSyncobjImportSyncFileTimeline(int fd, uint32_t handle,
+                                            uint64_t point, int sync_file_fd);
 extern int drmSyncobjExportSyncFile(int fd, uint32_t handle, int *sync_file_fd);
+extern int drmSyncobjExportSyncFileTimeline(int fd, uint32_t handle,
+                                            uint64_t point, int *sync_file_fd);
 extern int drmSyncobjWait(int fd, uint32_t *handles, unsigned num_handles,
 			  int64_t timeout_nsec, unsigned flags,
 			  uint32_t *first_signaled);
